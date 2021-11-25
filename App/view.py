@@ -24,6 +24,9 @@ import config as cf
 import sys
 import controller
 from DISClib.ADT import list as lt
+from DISClib.ADT.graph import gr
+from DISClib.ADT import map as mp
+from DISClib.DataStructures import mapentry as me
 assert cf
 
 
@@ -55,10 +58,28 @@ while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
-        print("Cargando información de los archivos ....")
+        print("Creando el catalogo...")
+        catalog = controller.initCatalog()
 
     elif int(inputs[0]) == 2:
-        pass
+        print('Cargando la información en el catálogo...')
+        controller.loadData(catalog)
+        rutas = catalog['rutas']
+        print('El grafo dirigido de rutas tiene '+str(gr.numVertices(rutas))+' aeropuertos diferentes, y '+str(gr.numVertices(rutas))+' rutas aéreas. El primer aeropuerto registrado fue: ')
+        primero = lt.firstElement(gr.vertices(rutas))
+        primero = mp.get(catalog['aeropuertos'], primero)
+        primero = me.getValue(primero)
+        conexiones = catalog['conexiones']
+        print("Nombre: "+primero['Name']+ "\nCiudad: "+ primero['City']+ "\nPais: "+ primero['Country']+ "\nLatitud: "+ primero['Latitude']+ "\nLongitud: "+ primero['Longitude'])
+        print('El grafo no dirigido de conexiones tiene '+str(gr.numVertices(conexiones))+' aeropuertos diferentes, y '+str(gr.numVertices(conexiones))+' rutas aéreas. El primer aeropuerto registrado fue: ')
+        ciudades = catalog['ciudades']
+        primero = lt.firstElement(gr.vertices(conexiones))
+        primero = mp.get(catalog['aeropuertos'], primero)
+        primero = me.getValue(primero)
+        print("Nombre: "+primero['Name']+ "\nCiudad: "+ primero['City']+ "\nPais: "+ primero['Country']+ "\nLatitud: "+ primero['Latitude']+ "\nLongitud: "+ primero['Longitude'])
+        print('Se han cargado '+ str(lt.size(ciudades))+ ' ciudades. La última ciudad cargada fue: ')
+        ultima = lt.lastElement(ciudades)
+        print("Nombre: "+ultima['city']+ "\nPoblación: "+ ultima['population']+"\nLatitud: "+ ultima['lat']+ "\nLongitud: "+ ultima['lng'])
 
     else:
         sys.exit(0)
