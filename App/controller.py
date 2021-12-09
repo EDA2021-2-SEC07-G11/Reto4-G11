@@ -40,15 +40,15 @@ def loadData(catalog):
     """
     Carga los datos de los archivos CSV en el modelo
     """
-    archivoAeropuertos = cf.data_dir + 'Skylines/airports_full.csv'
+    archivoAeropuertos = cf.data_dir + 'Skylines/airports-utf8-small.csv'
     input_file = csv.DictReader(open(archivoAeropuertos, encoding='utf-8'))
     for aeropuerto in input_file:
         model.agregarAeropuerto(catalog, aeropuerto)
-    archivoRutas = cf.data_dir + 'Skylines/routes_full.csv'
+    archivoRutas = cf.data_dir + 'Skylines/routes-utf8-small.csv'
     input_file = csv.DictReader(open(archivoRutas, encoding='utf-8'))
     for ruta in input_file:
         model.agregarRuta(catalog, ruta)
-    archivoCiudades = cf.data_dir + 'Skylines/worldcities.csv'
+    archivoCiudades = cf.data_dir + 'Skylines/worldcities-utf8.csv'
     input_file = csv.DictReader(open(archivoCiudades, encoding='utf-8'))
     for ciudad in input_file:
         model.agregarCiudad(catalog, ciudad)
@@ -56,3 +56,32 @@ def loadData(catalog):
 # Funciones de ordenamiento
 
 # Funciones de consulta sobre el catálogo
+def datosCarga(catalog):
+    return model.datosCargaAeropuertos(catalog)
+
+def datosCargaCiudades(catalog):
+    return model.datosCargaCiudades(catalog)
+
+def ciudadesHomonimas(lista):
+    return model.darCiudadesHomonimas(lista)
+
+def aeropuertoCercano(catalog, ciudad):
+    return model.aeropuertoCercano(catalog, ciudad)
+
+def infoAeropuerto(aeropuerto):
+    return model.datosAeropueto2(aeropuerto)
+
+def infoCamino(pila):
+    return model.datosCamino(pila)
+
+def darConectados(catalog):
+    return model.darConectados(catalog)
+
+def darMST(catalog,aeropuerto):
+    return model.darMST(catalog,aeropuerto)
+
+def eliminarAeropuerto(catalog, eliminado):
+    return model.darVerticesAfectados(catalog, eliminado)
+
+def datosFinal(lista):
+    return model.darInfoUltimo(lista)
